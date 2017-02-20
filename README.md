@@ -1,1 +1,1 @@
-opsworks-cookbooks
+opsworks-cookbooks for odoo v10
