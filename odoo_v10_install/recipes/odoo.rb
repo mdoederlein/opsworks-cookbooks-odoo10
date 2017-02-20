@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2016 Michael Doederlein, All Rights Reserved.
 
-Chef::Log.info("********** running odoo_v9_install::odoo.rb **********")
+Chef::Log.info("********** running odoo_v10_install::odoo.rb **********")
 
 # change owner of $HOME for user odoo
 directory '/opt/odoo' do
@@ -36,7 +36,7 @@ execute 'pip-install' do
   not_if 'pip list | awk \'{print $1}\' | grep xlwt'
 end
 #execute 'easy_install' do
-# scheinbar ist das Verzeichnis pyPdf vorhanden, auch wenn easy_install nicht gelaufen ist -> prüfen!
+# scheinbar ist das Verzeichnis pyPdf vorhanden, auch wenn easy_install nicht gelaufen ist -> prï¿½fen!
 #  command 'easy_install pyPdf vatnumber pydot psycogreen suds ofxparse'
 #  not_if { File.exist?("/usr/local/lib/python2.7/dist-packages/pyPdf") }
 #end
