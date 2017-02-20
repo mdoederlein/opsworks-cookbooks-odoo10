@@ -1,8 +1,8 @@
-# Cookbook Name:: odoo_v9_install
+# Cookbook Name:: odoo_v10_install
 # Recipe:: add_user
 #
 # Copyright (c) 2016 Michael Doederlein, All Rights Reserved.
-Chef::Log.info("********** running odoo_v9_install::add_user.rb **********")
+Chef::Log.info("********** running odoo_v10_install::add_user.rb **********")
 
 # add group
 group 'add odoo group' do

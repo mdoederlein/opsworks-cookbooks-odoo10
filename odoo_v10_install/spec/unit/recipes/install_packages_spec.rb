@@ -6,7 +6,7 @@
 
 require 'spec_helper'
 
-describe 'odoo_v9_install::install_packages' do
+describe 'odoo_v10_install::install_packages' do
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new

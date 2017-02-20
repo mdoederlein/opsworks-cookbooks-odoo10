@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: odoo_v9_install
+# Cookbook Name:: odoo_v10_install
 # Recipe:: postgresql
 #
 # Copyright (c) 2016 Michael Doederlein, All Rights Reserved.
