@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: postgresql
+# Cookbook:: postgresql
 # Recipe:: client
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,10 @@
 # limitations under the License.
 #
 
-include_recipe "postgresql::ca_certificates"
-
 case node['platform_family']
 when 'debian'
   if node['postgresql']['version'].to_f > 9.3
-    node.set['postgresql']['enable_pgdg_apt'] = true
+    node.normal['postgresql']['enable_pgdg_apt'] = true
   end
 
   if node['postgresql']['enable_pgdg_apt']
@@ -32,6 +30,4 @@ when 'rhel'
   end
 end
 
-node['postgresql']['client']['packages'].each do |pkg|
-  package pkg
-end
+package node['postgresql']['client']['packages']
