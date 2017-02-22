@@ -4,12 +4,12 @@
 # Copyright (c) 2016 Michael Doederlein, All Rights Reserved.
 Chef::Log.info("********** running odoo_v10_install::install_packages.rb **********")
 
-# git odoo git-repository from GitHub
+# generate target location for odoo git-repository
 directory '/opt/odoo' do
   owner node['install_odoo']['user']
   group node['install_odoo']['group']
 end
-# sync git repository
+# sync git repository from GitHub
 git "#{node['install_odoo']['homedir']}/odoo-server" do
   user node['install_odoo']['user']
   group node['install_odoo']['group']
@@ -30,6 +30,10 @@ execute 'npm-packages' do
   command 'npm install -g less less-plugin-clean-css'
 end
 
+link '/usr/bin/nodejs' do
+  to '/usr/bin/node'
+end
+
 # install further requirements
 #execute 'pip-update' do
 #  command 'easy_install --upgrade pip'
@@ -47,4 +51,4 @@ end
 # scheinbar ist das Verzeichnis pyPdf vorhanden, auch wenn easy_install nicht gelaufen ist -> pr�fen!
 #  command 'easy_install pyPdf vatnumber pydot psycogreen suds ofxparse'
 #  not_if { File.exist?("/usr/local/lib/python2.7/dist-packages/pyPdf") }
-#en
+#end
