@@ -40,7 +40,7 @@ end
 
 # create service conf
 template '/etc/systemd/system/odoo-server.service' do
-  source 'odoo-server.serivce.erb'
+  source 'odoo-server.service.erb'
   mode '0644'
 end
 
