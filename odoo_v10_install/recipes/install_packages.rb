@@ -4,6 +4,21 @@
 # Copyright (c) 2016 Michael Doederlein, All Rights Reserved.
 Chef::Log.info("********** running odoo_v10_install::install_packages.rb **********")
 
+# git odoo git-repository from GitHub
+directory '/opt/odoo' do
+  owner node['install_odoo']['user']
+  group node['install_odoo']['group']
+end
+# sync git repository
+git "#{node['install_odoo']['homedir']}/odoo-server" do
+  user node['install_odoo']['user']
+  group node['install_odoo']['group']
+  depth 1
+  repository node['install_odoo']['git_odoo_repository']
+  revision node['install_odoo']['git_odoo_branch']
+  action :sync
+end
+
 # install apt packages
 package ['gcc', 'unzip', 'python-pychart', 'wget', 'git', 'python-pip', 'python-imaging', 'python-setuptools', 'python-dev', 'libxslt-dev', 'libxml2-dev', 'libldap2-dev', 'libsasl2-dev', 'node-less', 'postgresql-server-dev-all', 'nodejs', 'npm', 'libtiff5-dev', 'libjpeg8-dev', 'zlib1g-dev', 'libfreetype6-dev', 'liblcms2-dev', 'libwebp-dev', 'tcl8.6-dev', 'tk8.6-dev', 'python-tk']
 

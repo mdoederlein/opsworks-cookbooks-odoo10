@@ -6,22 +6,6 @@
 
 Chef::Log.info("********** running odoo_v10_install::odoo.rb **********")
 
-# change owner of $HOME for user odoo
-directory '/opt/odoo' do
-  owner node['install_odoo']['user']
-  group node['install_odoo']['group']
-end
-
-# sync git repository
-git "#{node['install_odoo']['homedir']}/odoo-server" do
-  user node['install_odoo']['user']
-  group node['install_odoo']['group']
-  depth 1
-  repository node['install_odoo']['git_odoo_repository']
-  revision node['install_odoo']['git_odoo_branch']
-  action :sync
-end
-
 # make directory for custom addons
 execute 'mkdir-custom-add' do
   user node['install_odoo']['user']
