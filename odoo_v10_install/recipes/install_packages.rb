@@ -5,37 +5,31 @@
 Chef::Log.info("********** running odoo_v10_install::install_packages.rb **********")
 
 # install apt packages
-package ['wget', 'git', 'python-pip', 'python-imaging', 'python-setuptools', 'python-dev', 'libxslt-dev', 'libxml2-dev', 'libldap2-dev', 'libsasl2-dev', 'node-less', 'postgresql-server-dev-all', 'nodejs', 'npm', 'libtiff5-dev', 'libjpeg8-dev', 'zlib1g-dev', 'libfreetype6-dev', 'liblcms2-dev', 'libwebp-dev', 'tcl8.6-dev', 'tk8.6-dev', 'python-tk']
+package ['gcc', 'unzip', 'python-pychart', 'wget', 'git', 'python-pip', 'python-imaging', 'python-setuptools', 'python-dev', 'libxslt-dev', 'libxml2-dev', 'libldap2-dev', 'libsasl2-dev', 'node-less', 'postgresql-server-dev-all', 'nodejs', 'npm', 'libtiff5-dev', 'libjpeg8-dev', 'zlib1g-dev', 'libfreetype6-dev', 'liblcms2-dev', 'libwebp-dev', 'tcl8.6-dev', 'tk8.6-dev', 'python-tk']
+
+# packages for webkit
+package ['fontconfig', 'libfontconfig1', 'libx11-6', 'libxext6', 'libxrender1', 'xfonts-base', 'xfonts-75dpi']
 
 # install node packages
 execute 'npm-packages' do
   command 'npm install -g less less-plugin-clean-css'
 end
 
-# download webkit
-execute 'wget-download' do
-  cwd '/tmp'
-  command "wget #{node['install_odoo']['webkit_url']}/#{node['install_odoo']['webkit_package']}"
-  not_if { File.exist?("/tmp/#{node['install_odoo']['webkit_package']}") }
-end
+# install further requirements
+#execute 'pip-update' do
+#  command 'easy_install --upgrade pip'
+#end
 
-# install further dependencies for webkit
-package ['fontconfig', 'libfontconfig1', 'libx11-6', 'libxext6', 'libxrender1', 'xfonts-base', 'xfonts-75dpi']
+#execute 'pip-install' do
+#  execute 'pip install BeautifulSoup BeautifulSoup4 passlib pillow dateutils polib unidecode flanker simplejson enum py4j'
+#end
 
-# install webkit
-execute "install-wkthmltox" do
-  command "dpkg -i /tmp/#{node['install_odoo']['webkit_package']}"
-#  returns [0, 1]
+execute 'pip-install' do
+  command 'pip install -r /opt/odoo/odoo-server/requirements.txt'
+  not_if 'pip list | awk \'{print $1}\' | grep xlwt'
 end
-
-# copy webkit to target location
-execute 'copy-files' do
-  command 'cp /usr/local/bin/wkhtmltopdf /usr/bin && cp /usr/local/bin/wkhtmltoimage /usr/bin'
-  not_if { File.exist?("/usr/bin/wkhtmltopdf") }
-end
-
-# clearance
-execute 'delete-sources' do
-  command "rm '/tmp/#{node['install_odoo']['webkit_package']}'"
-  only_if { File.exist?("/tmp/#{node['install_odoo']['webkit_package']}") }
-end
+#execute 'easy_install' do
+# scheinbar ist das Verzeichnis pyPdf vorhanden, auch wenn easy_install nicht gelaufen ist -> pr�fen!
+#  command 'easy_install pyPdf vatnumber pydot psycogreen suds ofxparse'
+#  not_if { File.exist?("/usr/local/lib/python2.7/dist-packages/pyPdf") }
+#en

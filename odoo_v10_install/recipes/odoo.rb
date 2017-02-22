@@ -30,17 +30,6 @@ execute 'mkdir-custom-add' do
   not_if { File.exist?("#{node['install_odoo']['custom_addons']}") }
 end
 
-# install further requirements
-execute 'pip-install' do
-  command 'pip install -r /opt/odoo/odoo-server/requirements.txt'
-  not_if 'pip list | awk \'{print $1}\' | grep xlwt'
-end
-#execute 'easy_install' do
-# scheinbar ist das Verzeichnis pyPdf vorhanden, auch wenn easy_install nicht gelaufen ist -> pr�fen!
-#  command 'easy_install pyPdf vatnumber pydot psycogreen suds ofxparse'
-#  not_if { File.exist?("/usr/local/lib/python2.7/dist-packages/pyPdf") }
-#end
-
 # add log-path
 directory '/var/log/odoo' do
   owner node['install_odoo']['user']
@@ -63,6 +52,12 @@ end
 template '/etc/init.d/odoo-server' do
   source 'odoo-server.erb'
   mode '0755'
+end
+
+# create service conf
+template '/etc/systemd/system/odoo-server.service' do
+  source 'odoo-server.serivce.erb'
+  mode '0644'
 end
 
 # enable odoo service
