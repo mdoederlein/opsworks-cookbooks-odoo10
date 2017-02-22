@@ -30,8 +30,8 @@ execute 'npm-packages' do
   command 'npm install -g less less-plugin-clean-css'
 end
 
-link '/usr/bin/nodejs' do
-  to '/usr/bin/node'
+link '/usr/bin/node' do
+  to '/usr/bin/nodejs'
 end
 
 # install further requirements
