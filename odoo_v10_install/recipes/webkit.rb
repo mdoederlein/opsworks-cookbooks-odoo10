@@ -13,6 +13,7 @@ end
 
 # unpack webkit
 execute "unpack-wkthmltox" do
+  cwd '/tmp'
   command "tar xvfJ /tmp/#{node['install_odoo']['webkit_package']}"
 #  returns [0, 1]
 end
