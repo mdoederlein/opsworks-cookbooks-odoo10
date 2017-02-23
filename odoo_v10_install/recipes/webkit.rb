@@ -13,17 +13,11 @@ end
 
 # unpack webkit
 execute "unpack-wkthmltox" do
-  command "unxz /tmp/#{node['install_odoo']['webkit_package']}"
+  command "tar xvfJ /tmp/#{node['install_odoo']['webkit_package']}"
 #  returns [0, 1]
 end
 
-# untar webkit
-execute "untar-wkthmltox" do
-  command "tar xvf /tmp/#{node['install_odoo']['webkit_package']}"
-#  returns [0, 1]
-end
-
-# copy webkit to target location
+# copy webkit to target location and some soft links
 execute 'copy-files' do
   command 'cp /tmp/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf /usr/bin && cp /tmp/wkhtmltopdf/wkhtmltox/bin/wkhtmltoimage /usr/bin'
   not_if { File.exist?("/usr/bin/wkhtmltopdf") }
