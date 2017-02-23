@@ -11,16 +11,28 @@ execute 'wget-download' do
   not_if { File.exist?("/tmp/#{node['install_odoo']['webkit_package']}") }
 end
 
-# install webkit
-execute "install-wkthmltox" do
-  command "dpkg -i /tmp/#{node['install_odoo']['webkit_package']}"
+# unpack webkit
+execute "unpack-wkthmltox" do
+  command "unxz /tmp/#{node['install_odoo']['webkit_package']}"
+#  returns [0, 1]
+end
+
+# untar webkit
+execute "untar-wkthmltox" do
+  command "tar xvf /tmp/#{node['install_odoo']['webkit_package']}"
 #  returns [0, 1]
 end
 
 # copy webkit to target location
 execute 'copy-files' do
-  command 'cp /usr/local/bin/wkhtmltopdf /usr/bin && cp /usr/local/bin/wkhtmltoimage /usr/bin'
+  command 'cp /tmp/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf /usr/bin && cp /tmp/wkhtmltopdf/wkhtmltox/bin/wkhtmltoimage /usr/bin'
   not_if { File.exist?("/usr/bin/wkhtmltopdf") }
+end
+link '/usr/bin/wkhtmltopdf' do
+  to '/usr/local/bin/wkhtmltopdf'
+end
+link '/usr/bin/wkhtmltoimage' do
+  to '/usr/local/bin/wkhtmltoimage'
 end
 
 # clearance
