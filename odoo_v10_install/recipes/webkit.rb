@@ -20,7 +20,7 @@ end
 
 # copy webkit to target location and some soft links
 execute 'copy-files' do
-  command 'cp /tmp/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf /usr/bin && cp /tmp/wkhtmltopdf/wkhtmltox/bin/wkhtmltoimage /usr/bin'
+  command 'cp /tmp/wkhtmltox/bin/wkhtmltopdf /usr/bin && cp /tmp/wkhtmltox/bin/wkhtmltoimage /usr/bin'
   not_if { File.exist?("/usr/bin/wkhtmltopdf") }
 end
 link '/usr/bin/wkhtmltopdf' do
