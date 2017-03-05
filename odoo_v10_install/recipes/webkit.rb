@@ -23,11 +23,11 @@ execute 'copy-files' do
   command 'cp /tmp/wkhtmltox/bin/wkhtmltopdf /usr/bin && cp /tmp/wkhtmltox/bin/wkhtmltoimage /usr/bin'
   not_if { File.exist?("/usr/bin/wkhtmltopdf") }
 end
-link '/usr/bin/wkhtmltopdf' do
-  to '/usr/local/bin/wkhtmltopdf'
+link '/usr/local/bin/wkhtmltopdf' do
+  to '/usr/bin/wkhtmltopdf'
 end
-link '/usr/bin/wkhtmltoimage' do
-  to '/usr/local/bin/wkhtmltoimage'
+link '/usr/local/bin/wkhtmltoimage' do
+  to '/usr/bin/wkhtmltoimage'
 end
 
 # clearance

@@ -1,7 +1,5 @@
 [options]
-# addons_path = /home/odoo/modules/odoo10-enterprise,/opt/odoo/odoo10/addons,/home/odoo/modules/community,/home/odoo/modules/acp,/home/odoo/modules/customer
 addons_path= /opt/odoo/odoo-server/addons,<%= node['install_odoo']['custom_addons'] %>
-# admin_passwd = $_Foobar01$
 admin_passwd = <%= node['install_odoo']['admin_passwd'] %>
 csv_internal_sep = ,
 # db_host = localhost
